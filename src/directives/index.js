@@ -1,13 +1,13 @@
 export const fadeViewport = {
   mounted(el) {
-    el.classList.add('animate__animated')
     el.style.opacity = 0
+    el.style.visibility = 'visible'
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.remove('pre-hidden')
-          el.style.visibility = 'visible'
-          el.classList.add('animate__fadeIn')
+          el.style.transition = `opacity .8s ease`
+          el.style.opacity = 1
+          observer.unobserve(el)
         }
       },
       { threshold: 0.2 }
@@ -22,19 +22,12 @@ export const fadeViewport = {
 
 export const fadeDownViewport = {
   mounted(el) {
-    el.classList.add('animate__animated')
     el.style.opacity = 0
+    el.style.visibility = 'visible'
+    el.style.transition = `opacity .6s ease`
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.remove('pre-hidden')
-          el.style.visibility = 'visible'
-          el.classList.remove('animate__fadeOut')
-          el.classList.add('animate__fadeIn')
-        } else {
-          el.classList.remove('animate__fadeIn')
-          el.classList.add('animate__fadeOut')
-        }
+        el.style.opacity = entry.isIntersecting ? 1 : 0
       },
       { threshold: 0.2 }
     )

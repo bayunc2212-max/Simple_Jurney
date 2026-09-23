@@ -3,7 +3,7 @@
     <div data-v-468a0494 class="top">
       <div data-v-468a0494 class="brand">
         <div data-v-468a0494 class="logo">
-          <img data-v-468a0494 src="/sji.svg" alt="Simple Journey" />
+          <img data-v-468a0494 src="/sji.svg" alt="Simple Journey" loading="lazy" decoding="async" />
           <span data-v-468a0494 class="text">Simple Journey</span>
         </div>
         <div data-v-468a0494 class="set-flex">
@@ -26,7 +26,7 @@
           target="_blank"
           rel="noopener"
         >
-          <img data-v-468a0494 :src="social.icon" :alt="social.name" />
+          <img data-v-468a0494 :src="social.icon" :alt="social.name" loading="lazy" decoding="async" />
         </a>
       </div>
     </div>

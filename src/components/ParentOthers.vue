@@ -20,8 +20,8 @@ export default {
   name: 'ParentOthers',
   components: {
     MainStatement,
-    StatementHead: StatementSlide,
-    ChooseUs: WhyChooseUsDesktop
+    StatementSlide,
+    WhyChooseUsDesktop
   }
 }
 </script>

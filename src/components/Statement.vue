@@ -2,7 +2,7 @@
   <section data-v-02e88d9d ref="section" :class="alignmentClass" :style="sectionStyle">
     <div data-v-02e88d9d class="content">
       <div data-v-02e88d9d v-fade-viewport class="brand delay-300">
-        <img data-v-02e88d9d src="/icon_diamond.png" alt="brand icon" class="brand-icon" />
+        <img data-v-02e88d9d src="/icon_diamond.png" alt="brand icon" class="brand-icon" loading="lazy" decoding="async" />
         <span data-v-02e88d9d class="brand-text">{{ brand }}</span>
       </div>
       <h1 data-v-02e88d9d v-fade-viewport class="delay-1000">{{ statement }}</h1>

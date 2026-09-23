@@ -16,10 +16,15 @@
         </p>
       </div>
     </div>
-    <div data-v-2d80f7e5 v-fade-viewport class="cards delay-1500">
+    <div
+      data-v-2d80f7e5
+      v-fade-viewport
+      class="cards delay-1500"
+      :class="{ 'cards-expanded': expanded }"
+    >
       <a
         data-v-2d80f7e5
-        v-for="product in products"
+        v-for="product in visibleProducts"
         :key="product.name"
         :href="`/products/${product.name}`"
         class="card-link"
@@ -27,8 +32,8 @@
         <ProductCard data-v-2d80f7e5 :badge="product.badge" :image="product.image" :title="product.title" />
       </a>
     </div>
-    <p v-if="showMore" data-v-2d80f7e5 v-fade-viewport class="delay-700 view-more">
-      View {{ products.length <= 2 ? 'More' : 'Less' }} →
+    <p v-if="showMore" data-v-2d80f7e5 v-fade-viewport class="delay-700 view-more" @click="expanded = !expanded">
+      {{ expanded ? 'View Less' : 'View More' }} {{ expanded ? '←' : '→' }}
     </p>
   </section>
 </template>
@@ -42,6 +47,16 @@ export default {
   components: {
     ProductCard,
     Statement
+  },
+  data() {
+    return {
+      expanded: false
+    }
+  },
+  computed: {
+    visibleProducts() {
+      return this.expanded ? this.products : this.products.slice(0, 2)
+    }
   },
   props: {
     subtitle: String,

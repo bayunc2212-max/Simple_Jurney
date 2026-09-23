@@ -7,14 +7,24 @@
     <Navbar />
     <div data-v-c437a423 class="overlay"></div>
     <div data-v-c437a423 class="container-wrapper">
-      <div data-v-c437a423 class="hero-content" :class="{ visible: isVisible }">
+      <div data-v-c437a423 class="hero-content">
         <div data-v-c437a423 class="left">
-          <span data-v-c437a423> Accelerating Your Digital Transformation </span>
+          <template v-for="(word, i) in titleWords" :key="'t' + i">
+            <span v-if="i > 0" data-v-c437a423 class="w-sep">{{ ' ' }}</span>
+            <span data-v-c437a423 class="w-mask"><span class="w">{{ word }}</span></span>
+          </template>
         </div>
         <div data-v-c437a423 class="right">
-          <span data-v-c437a423>
-            Enterprise-grade solutions for scalable,<br />
-            secure, and future-ready systems.
+          <span data-v-c437a423 class="right-text">
+            <template v-for="(word, i) in rightLines[0]" :key="'a' + i">
+              <span v-if="i > 0" data-v-c437a423 class="w-sep">{{ ' ' }}</span>
+              <span data-v-c437a423 class="w-mask"><span class="w">{{ word }}</span></span>
+            </template>
+            <br data-v-c437a423 />
+            <template v-for="(word, i) in rightLines[1]" :key="'b' + i">
+              <span v-if="i > 0" data-v-c437a423 class="w-sep">{{ ' ' }}</span>
+              <span data-v-c437a423 class="w-mask"><span class="w">{{ word }}</span></span>
+            </template>
           </span>
         </div>
       </div>
@@ -23,6 +33,7 @@
 </template>
 
 <script>
+import gsap from 'gsap'
 import Navbar from './Navbar.vue'
 
 export default {
@@ -30,13 +41,24 @@ export default {
   components: { Navbar },
   data() {
     return {
-      isVisible: false
+      titleWords: 'Accelerating Your Digital Transformation'.split(' '),
+      rightLines: [
+        'Enterprise-grade solutions for scalable,'.split(' '),
+        'secure, and future-ready systems.'.split(' ')
+      ]
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.isVisible = true
-    }, 100)
+    const words = this.$el.querySelectorAll('.w')
+    const fontsReady = (document.fonts && document.fonts.ready) || Promise.resolve()
+    const timeout = new Promise((resolve) => setTimeout(resolve, 900))
+    Promise.race([fontsReady, timeout]).then(() => {
+      gsap.fromTo(
+        words,
+        { yPercent: 140, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 1.2, ease: 'power4.out', stagger: 0.1, delay: 0.4 }
+      )
+    })
   }
 }
 </script>
