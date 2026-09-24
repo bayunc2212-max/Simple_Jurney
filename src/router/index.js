@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
+import About from '../views/About.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 import NotFound from '../views/NotFound.vue'
 
@@ -37,7 +38,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'About',
-      component: PlaceholderPage,
+      component: About,
       meta: {
         title: 'About',
         description: 'Learn more About Us'

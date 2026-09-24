@@ -7,36 +7,36 @@
 }
 
 .glass-card {
-    Â Â width: 240px;
-    Â Â height: 360px;
-    Â Â background: #fff6;
-    Â Â backdrop-filter: blur(10px);
-    Â Â -webkit-backdrop-filter: blur(10px);
-    Â Â border-radius: 20px;
-    Â Â border: 1px solid #ffffff4d;
-    Â Â box-shadow: Â Â Â Â 0 8px 32px #0000001a, Â Â Â Â inset 0 1px 0 #ffffff80, Â Â Â Â inset 0 -1px 0 #ffffff1a, Â Â Â Â inset 0 0 4px 2px #fff3;
-    Â Â position: relative;
-    Â Â overflow: hidden
+      width: 240px;
+      height: 360px;
+      background: #fff6;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid #ffffff4d;
+      box-shadow:     0 8px 32px #0000001a,     inset 0 1px 0 #ffffff80,     inset 0 -1px 0 #ffffff1a,     inset 0 0 4px 2px #fff3;
+      position: relative;
+      overflow: hidden
 }
 
 .glass-card:before {
-    Â Â content: "";
-    Â Â position: absolute;
-    Â Â top: 0;
-    Â Â left: 0;
-    Â Â right: 0;
-    Â Â height: 1px;
-    Â Â background: linear-gradient(Â Â Â Â 90deg, Â Â Â Â transparent, Â Â Â Â rgba(255, 255, 255, .8), Â Â Â Â transparentÂ Â )
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(    90deg,     transparent,     rgba(255, 255, 255, .8),     transparent  )
 }
 
 .glass-card:after {
-    Â Â content: "";
-    Â Â position: absolute;
-    Â Â top: 0;
-    Â Â left: 0;
-    Â Â width: 1px;
-    Â Â height: 100%;
-    Â Â background: linear-gradient(Â Â Â Â 180deg, Â Â Â Â rgba(255, 255, 255, .8), Â Â Â Â transparent, Â Â Â Â rgba(255, 255, 255, .3) Â Â )
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(    180deg,     rgba(255, 255, 255, .8),     transparent,     rgba(255, 255, 255, .3)   )
 }
 
 .pre-hidden {
@@ -3129,7 +3129,7 @@ h1[data-v-99055ff4] {
 }
 
 .mission li[data-v-71b338d5]:before {
-    content: "â€¢";
+    content: "•";
     color: #fff;
     font-size: 18px;
     line-height: 1;
