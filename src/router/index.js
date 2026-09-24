@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import About from '../views/About.vue'
 import Career from '../views/Career.vue'
+import Products from '../views/Products.vue'
+import ProductDetail from '../views/ProductDetail.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
 import CareerDetail from '../views/CareerDetail.vue'
 import NotFound from '../views/NotFound.vue'
@@ -31,7 +33,7 @@ const router = createRouter({
     {
       path: '/products',
       name: 'Products',
-      component: PlaceholderPage,
+      component: Products,
       meta: {
         title: 'Products',
         description: 'Explore our Products'
@@ -67,7 +69,7 @@ const router = createRouter({
     {
       path: '/products/:name',
       name: 'ProductDetail',
-      component: PlaceholderPage,
+      component: ProductDetail,
       meta: {
         title: 'Product',
         description: 'Product Detail'
