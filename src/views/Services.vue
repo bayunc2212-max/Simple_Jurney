@@ -1,7 +1,7 @@
 <template>
   <div>
+    <Navbar />
     <section ref="heroSection" data-v-8f5e8dc2 class="hero">
-      <Navbar />
       <div data-v-8f5e8dc2 class="top-gradient"></div>
       <div data-v-8f5e8dc2 class="overlay"></div>
       <div data-v-8f5e8dc2 class="absolute-bread-cumb">

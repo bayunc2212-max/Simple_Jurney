@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Services from '../views/Services.vue'
 import About from '../views/About.vue'
+import Career from '../views/Career.vue'
 import PlaceholderPage from '../views/PlaceholderPage.vue'
+import CareerDetail from '../views/CareerDetail.vue'
 import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
@@ -47,7 +49,7 @@ const router = createRouter({
     {
       path: '/career',
       name: 'Career',
-      component: PlaceholderPage,
+      component: Career,
       meta: {
         title: 'Career',
         description: 'Career Page'
@@ -69,6 +71,15 @@ const router = createRouter({
       meta: {
         title: 'Product',
         description: 'Product Detail'
+      }
+    },
+    {
+      path: '/career/:position',
+      name: 'CareerDetail',
+      component: CareerDetail,
+      meta: {
+        title: 'Career',
+        description: 'Career Position Detail'
       }
     },
     {

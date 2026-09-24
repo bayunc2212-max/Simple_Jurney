@@ -1,7 +1,9 @@
 <template>
   <div>
+     <Navbar />
+     
     <section data-v-0f97a00f="" class="hero">
-      <Navbar />
+
       <div data-v-0f97a00f="" class="top-gradient"></div>
       <div data-v-0f97a00f="" class="overlay"></div>
       <div data-v-0f97a00f="" style="position: absolute; z-index: 999; left: 7%; top: 15%">
