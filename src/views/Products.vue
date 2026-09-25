@@ -17,10 +17,10 @@
         </div>
       </div>
       <div data-v-2c71e6e1="" class="hero-content">
-        <div data-v-2c71e6e1="" class="left delay-300 animate__animated animate__fadeIn" style="opacity: 0; visibility: visible;">
+        <div data-v-2c71e6e1="" class="left delay-300 animate__animated animate__fadeIn" >
           <h1 data-v-2c71e6e1="">Technology Products Built for Enterprise Needs</h1>
         </div>
-        <div data-v-2c71e6e1="" class="right delay-700 animate__animated animate__fadeIn" style="opacity: 0; visibility: visible;">
+        <div data-v-2c71e6e1="" class="right delay-700 animate__animated animate__fadeIn" >
           <p data-v-2c71e6e1=""> Our products are designed to address real operational challenges across industries, ensuring reliability, scalability, and seamless integration with existing systems. </p>
         </div>
       </div>
@@ -30,99 +30,35 @@
       <div data-v-e2b51a45="" class="show product-style">
         <div data-v-e2b51a45="" class="container-search">
           <div data-v-e2b51a45="" class="search-wrapper">
-            <input data-v-e2b51a45="" type="text" class="search-input" placeholder="Search products..." />
+            <input data-v-e2b51a45="" type="text" class="search-input" placeholder="Search products..." v-model="search" />
           </div>
           <div data-v-e2b51a45="" class="select-wrapper">
-            <button data-v-e2b51a45="" class="select-trigger">
-              <span data-v-e2b51a45="" class="label">All Categories</span>
-              <svg data-v-e2b51a45="" class="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button data-v-e2b51a45="" class="select-trigger" @click="catOpen = !catOpen">
+              <span data-v-e2b51a45="" class="label">{{ category }}</span>
+              <svg data-v-e2b51a45="" class="icon" :class="{ open: catOpen }" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline data-v-e2b51a45="" points="6 9 12 15 18 9"></polyline>
               </svg>
             </button>
+            <transition name="fade-slide">
+              <ul v-show="catOpen" data-v-e2b51a45="" class="dropdown">
+                <li v-for="c in categories" :key="c" :class="{ active: c === category }" @click="selectCategory(c)">{{ c }}</li>
+              </ul>
+            </transition>
           </div>
         </div>
         <div data-v-e2b51a45="" class="cards">
-          <a data-v-e2b51a45="" href="/products/seamless-passenger" class="card-link">
+          <a v-for="p in filteredProducts" :key="p.href" data-v-e2b51a45="" :href="p.href" class="card-link">
             <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
               <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/seamless_passenger.webp" alt="Seamless Passenger" style="border-radius: 12px;" />
+                <span data-v-4f4b14b5="" class="badge">{{ p.badge }}</span>
+                <img data-v-4f4b14b5="" :src="p.img" :alt="p.title" style="border-radius: 12px;" />
               </div>
-              <h3 data-v-4f4b14b5="" class="title">Seamless Passenger</h3>
+              <h3 data-v-4f4b14b5="" class="title">{{ p.title }}</h3>
             </div>
           </a>
-          <a data-v-e2b51a45="" href="/products/passport-issuance" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/ds.webp" alt="Passport Issuance" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Passport Issuance</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/management-deteni" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/management_deteni.webp" alt="Management Deteni" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Management Deteni</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/pki-solution" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/pki_solution.webp" alt="PKI Solution" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">PKI Solution</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/e-kiosk" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/kiosk.webp" alt="E-Kiosk" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">E-Kiosk</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/airport-autogate" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Hardware</span>
-                <img data-v-4f4b14b5="" src="/airport_gate.webp" alt="Airport Autogate" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Airport Autogate</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/enrollment-devices" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Hardware</span>
-                <img data-v-4f4b14b5="" src="/enrollment_device.webp" alt="Enrollment Devices" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Enrollment Devices</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/micro-hsm" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Hardware</span>
-                <img data-v-4f4b14b5="" src="/default.webp" alt="Micro HSM" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Micro HSM</h3>
-            </div>
-          </a>
-          <a data-v-e2b51a45="" href="/products/passkey" class="card-link">
-            <div data-v-4f4b14b5="" data-v-e2b51a45="" class="product-card">
-              <div data-v-4f4b14b5="" class="image-wrapper">
-                <span data-v-4f4b14b5="" class="badge">Software</span>
-                <img data-v-4f4b14b5="" src="/default.webp" alt="Passkey" style="border-radius: 12px;" />
-              </div>
-              <h3 data-v-4f4b14b5="" class="title">Passkey</h3>
-            </div>
-          </a>
+          <div v-if="filteredProducts.length === 0" data-v-e2b51a45="" style="grid-column: 1 / -1; text-align: center; color: #ffffff8c; padding: 3rem 0; font-size: 16px;">
+            No products found
+          </div>
         </div>
       </div>
     </section>
@@ -137,6 +73,7 @@
 import Navbar from '../components/Navbar.vue'
 import AppFooter from '../components/AppFooter.vue'
 import CollaborateSection from '../components/CollaborateSection.vue'
+import { useProductStore } from '../stores/products'
 
 export default {
   name: 'Products',
@@ -144,6 +81,42 @@ export default {
     Navbar,
     AppFooter,
     CollaborateSection
+  },
+  created() {
+    this.productStore = useProductStore()
+  },
+  data() {
+    return {
+      search: '',
+      category: 'All Categories',
+      catOpen: false
+    }
+  },
+  computed: {
+    products() {
+      return this.productStore.products.map((p) => ({
+        href: `/products/${p.name}`,
+        title: p.title,
+        badge: p.badge,
+        img: p.image
+      }))
+    },
+    categories() {
+      return ['All Categories', ...new Set(this.products.map(p => p.badge))]
+    },
+    filteredProducts() {
+      const q = this.search.trim().toLowerCase()
+      return this.products.filter(p =>
+        (this.category === 'All Categories' || p.badge === this.category) &&
+        (q === '' || p.title.toLowerCase().includes(q))
+      )
+    }
+  },
+  methods: {
+    selectCategory(c) {
+      this.category = c
+      this.catOpen = false
+    }
   }
 }
 </script>

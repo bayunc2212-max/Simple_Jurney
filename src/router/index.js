@@ -4,10 +4,12 @@ import Services from '../views/Services.vue'
 import About from '../views/About.vue'
 import Career from '../views/Career.vue'
 import Products from '../views/Products.vue'
+import Contact from '../views/Contact.vue'
 import ProductDetail from '../views/ProductDetail.vue'
-import PlaceholderPage from '../views/PlaceholderPage.vue'
+// import PlaceholderPage from '../views/PlaceholderPage.vue'
 import CareerDetail from '../views/CareerDetail.vue'
 import NotFound from '../views/NotFound.vue'
+import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -60,7 +62,7 @@ const router = createRouter({
     {
       path: '/contact',
       name: 'Contact',
-      component: PlaceholderPage,
+      component: Contact,
       meta: {
         title: 'Contact',
         description: 'Get in touch with us'
@@ -85,6 +87,15 @@ const router = createRouter({
       }
     },
     {
+      path: '/privacy-policy',
+      name: 'PrivacyPolicy',
+      component: PrivacyPolicy,
+      meta: {
+        title: 'Privacy Policy',
+        description: 'Privacy Policy'
+      }
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: NotFound
@@ -102,6 +113,7 @@ const router = createRouter({
 })
 
 router.afterEach((to) => {
+  document.title = to.meta?.title ? `${to.meta.title} | Simple Journey` : 'Simple Journey'
   if (!to.hash) window.scrollTo(0, 0)
 })
 

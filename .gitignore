@@ -5,6 +5,9 @@ node_modules/
 dist/
 dist-ssr/
 
+# Stale build artifacts
+assets/
+
 # Local env files
 .env
 .env.local

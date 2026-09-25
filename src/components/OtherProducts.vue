@@ -20,25 +20,27 @@
 </template>
 
 <script>
+import { useProductStore } from '../stores/products'
+
 export default {
   name: 'OtherProducts',
+  created() {
+    this.productStore = useProductStore()
+  },
   data() {
     return {
-      expanded: false,
-      products: [
-        { href: '/products/seamless-passenger', title: 'Seamless Passenger', badge: 'Software', img: '/seamless_passenger.webp' },
-        { href: '/products/passport-issuance', title: 'Passport Issuance', badge: 'Software', img: '/ds.webp' },
-        { href: '/products/management-deteni', title: 'Management Deteni', badge: 'Software', img: '/management_deteni.webp' },
-        { href: '/products/pki-solution', title: 'PKI Solution', badge: 'Software', img: '/pki_solution.webp' },
-        { href: '/products/e-kiosk', title: 'E-Kiosk', badge: 'Software', img: '/kiosk.webp' },
-        { href: '/products/airport-autogate', title: 'Airport Autogate', badge: 'Hardware', img: '/airport_gate.webp' },
-        { href: '/products/enrollment-devices', title: 'Enrollment Devices', badge: 'Hardware', img: '/enrollment_device.webp' },
-        { href: '/products/micro-hsm', title: 'Micro HSM', badge: 'Hardware', img: '/default.webp' },
-        { href: '/products/passkey', title: 'Passkey', badge: 'Software', img: '/default.webp' }
-      ]
+      expanded: false
     }
   },
   computed: {
+    products() {
+      return this.productStore.products.map((p) => ({
+        href: `/products/${p.name}`,
+        title: p.title,
+        badge: p.badge,
+        img: p.image
+      }))
+    },
     visibleProducts() {
       const current = '/products/' + this.$route.params.name
       const others = this.products.filter(p => p.href !== current)

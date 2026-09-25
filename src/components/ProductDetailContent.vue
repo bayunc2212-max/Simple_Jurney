@@ -79,9 +79,9 @@
                   <div data-v-a68b62cd="" class="text">
                     <h1 data-v-a68b62cd="">Ready to Discuss This Solution?</h1>
                     <p data-v-a68b62cd="">Discuss your business technology needs with the SimpleJourney team.</p>
-                    <a data-v-86d9ff63="" data-v-a68b62cd="" href="/contact" class="link-wrapper"><button
+                    <router-link data-v-86d9ff63="" data-v-a68b62cd="" to="/contact" class="link-wrapper"><button
                         data-v-86d9ff63="" class="contact-btn"><span data-v-86d9ff63="" class="content">Let's Get
-                          Started<img data-v-86d9ff63="" class="icon" src="/arrow.png"></span></button></a>
+                          Started<img data-v-86d9ff63="" class="icon" src="/arrow.png"></span></button></router-link>
                   </div>
                 </div>
               </section>

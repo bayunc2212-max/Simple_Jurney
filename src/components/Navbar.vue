@@ -7,9 +7,9 @@
       <div data-v-aac37128 class="right">
         <ul data-v-aac37128 class="menu desktop">
           <li data-v-aac37128 v-for="menu in menus" :key="menu.label">
-            <a data-v-aac37128 :href="menu.link" class="menu-link" :class="{ active: isActive(menu.link) }">
+            <router-link data-v-aac37128 :to="menu.link" class="menu-link" :class="{ active: isActive(menu.link) }">
               {{ menu.label }}
-            </a>
+            </router-link>
           </li>
           <ContactButton data-v-aac37128 class="desktop" />
         </ul>
@@ -45,16 +45,16 @@
           gap: 2.3rem;
         "
       >
-        <a
+        <router-link
           data-v-aac37128
           v-for="menu in menus"
           :key="menu.label"
-          :href="menu.link"
+          :to="menu.link"
           :class="{ active: isActive(menu.link) }"
           @click="isOpen = false"
         >
           {{ menu.label }}
-        </a>
+        </router-link>
       </div>
     </div>
   </transition>
@@ -76,8 +76,7 @@ export default {
         { label: 'Career', link: '/career' }
       ],
       isOpen: false,
-      isScrolled: false,
-      currentPath: window.location.pathname
+      isScrolled: false
     }
   },
   watch: {
@@ -104,7 +103,8 @@ export default {
       this.isOpen = !this.isOpen
     },
     isActive(link) {
-      return !!(link === '/' && this.currentPath === '/' || link !== '/' && this.currentPath.startsWith(link))
+      const path = this.$route.path
+      return !!(link === '/' && path === '/' || link !== '/' && path.startsWith(link))
     }
   }
 }

@@ -554,7 +554,6 @@ export default {
         }
       ],
       mobScrollCtx: null,
-      descCtx: null,
       stmtTrigger: null,
       servicesTrigger: null
     }
@@ -562,9 +561,6 @@ export default {
   computed: {
     products() {
       return this.productState.products
-    },
-    descGetCurrentIndex() {
-      return useAnimateStore().indexAbout
     },
     mobAllMobileFeatures() {
       return [...this.mobLeftFeaturesMobile, ...this.mobRightFeaturesMobile].sort(
@@ -595,24 +591,21 @@ export default {
     this.initHeroWords()
     this.initMainStatement()
     this.initServicesAnimation()
-    this.$nextTick(() => {
-      this.mobPlayAnimation()
-    })
+this.$nextTick(() => {
+        try {
+          this.updateDescCards(0)
+        } catch (e) {
+          console.error(e)
+        }
+        this.mobPlayAnimation()
+      })
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.onResize)
     this.stmtTrigger && this.stmtTrigger.kill()
     this.servicesTrigger && this.servicesTrigger.kill()
     this.mobScrollCtx && this.mobScrollCtx.revert()
-    this.descCtx && this.descCtx.revert()
     ScrollTrigger.getAll().forEach((e) => e.kill())
-  },
-  watch: {
-    descGetCurrentIndex(value) {
-      if (value === 1) {
-        this.$nextTick(() => this.descInitScrollAnimation())
-      }
-    }
   },
   methods: {
     onResize() {
@@ -634,7 +627,7 @@ export default {
     },
     initMainStatement() {
       const section = this.$refs.mainHero
-      if (!section) return
+      if (!section || !section.offsetParent) return
       this.stmtTrigger = gsap
         .timeline({
           scrollTrigger: {
@@ -650,6 +643,8 @@ export default {
                 this.stmtCurrentIndex = index
                 this.animateState.setCurrentIndex(index)
               }
+              const p = Math.min(1, Math.max(0, (e.progress - 0.5) / 0.5))
+              this.updateDescCards(p)
             }
           }
         })
@@ -657,7 +652,7 @@ export default {
     },
     initServicesAnimation() {
       const section = this.$refs.servicesSection
-      if (!section) return
+      if (!section || !section.offsetParent) return
       const cards = Array.from(section.querySelectorAll('.service-card'))
       gsap.set(cards, { opacity: 0, y: -50, pointerEvents: 'none' })
       gsap.set(cards[0], { opacity: 1, y: 0, pointerEvents: 'auto' })
@@ -709,84 +704,65 @@ export default {
       this.mobScrollCtx && this.mobScrollCtx.revert()
       const section = this.$refs.whyMobile
       if (!section) return
+      const isMobile = window.innerWidth <= 768
+      if (!isMobile || !section.offsetParent) return
       this.mobScrollCtx = gsap.context(() => {
-        const isMobile = window.innerWidth <= 768
-        const center = section.querySelector(isMobile ? '.center-mobile' : '.center')
-        if (center) {
-          gsap.from(center, {
-            scrollTrigger: { trigger: center, start: 'top 45%' },
-            opacity: 0,
-            y: 30,
-            duration: 0.5,
-            ease: 'power3.out'
-          })
-        }
-        const nodes = isMobile
-          ? Array.from(section.querySelectorAll('.column-mobile-container .feature-card'))
-          : Array.from(section.querySelectorAll('.column .feature-card'))
-        const cards = nodes.sort(
+        const center = section.querySelector('.center-mobile')
+        const cards = Array.from(section.querySelectorAll('.column-mobile-container .feature-card')).sort(
           (a, b) =>
             parseInt(a.querySelector('.feature-number').textContent.trim(), 10) -
             parseInt(b.querySelector('.feature-number').textContent.trim(), 10)
         )
-        gsap.set(cards, { opacity: 0, y: 50 })
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: isMobile ? '+=50%' : '+=10%',
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            pinSpacing: false
+        const setProgress = (p) => {
+          const rp = Math.min(1, Math.max(0, p / 0.65))
+          const c = cards.length || 1
+          cards.forEach((card, i) => {
+            const t = Math.min(1, Math.max(0, rp * c - i))
+            gsap.set(card, { opacity: t, y: 24 * (1 - t), scale: 0.95 + 0.05 * t })
+          })
+          if (center) {
+            const ct = Math.min(1, Math.max(0, p / 0.12))
+            gsap.set(center, { opacity: ct, y: 24 * (1 - ct) })
           }
-        })
-        cards.forEach((card) => {
-          timeline.to(card, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' })
+        }
+        setProgress(0)
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 10%',
+          end: '+=120%',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          pinSpacing: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => setProgress(self.progress),
+          onRefresh: (self) => setProgress(self.progress)
         })
       }, section)
     },
-    descInitScrollAnimation() {
-      if (this.descCtx) return
+    updateDescCards(progress) {
       const section = this.$refs.descSection
       if (!section) return
-      this.descCtx = gsap.context(() => {
-        gsap.set('.center, .center-mobile', { opacity: 0, y: 30 })
-        gsap.set('.feature-card-item, .feature-card-item-mobile', { opacity: 0, scale: 0.5 })
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 50%',
-            toggleActions: 'play none none reverse'
-          }
-        })
-        timeline.to('.center, .center-mobile', {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out'
-        })
-        const cards = Array.from(
+      if (!this._descCards) {
+        this._descCards = Array.from(
           section.querySelectorAll('.feature-card-item, .feature-card-item-mobile')
-        )
-        cards.sort(
+        ).sort(
           (a, b) =>
             parseInt(a.querySelector('.feature-number').textContent.trim(), 10) -
             parseInt(b.querySelector('.feature-number').textContent.trim(), 10)
         )
-        const delay = this.animationMode === 'simultaneous' ? 0 : 0.5
-        timeline.to(
-          cards,
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            stagger: delay,
-            ease: 'back.out(1.7)'
-          },
-          '-=0.2'
-        )
-      }, section)
+      }
+      const cards = this._descCards
+      const p = Math.min(1, Math.max(0, progress))
+      if (p <= 0) {
+        cards.forEach((card) => gsap.set(card, { opacity: 0, scale: 0.5 }))
+        return
+      }
+      const n = cards.length || 1
+      cards.forEach((card, i) => {
+        const t = Math.min(1, Math.max(0, p * n - i))
+        gsap.set(card, { opacity: t, scale: 0.5 + 0.5 * t })
+      })
     },
     mobGetCardStyle(number) {
       if (this.screenWidth > 768) return {}
@@ -812,3 +788,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.slide.active .center[data-v-7e0f7104],
+.slide.active .center-mobile[data-v-7e0f7104] {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+</style>

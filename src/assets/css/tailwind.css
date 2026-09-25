@@ -1,4 +1,2 @@
-/* Tailwind CSS is installed and the @tailwindcss/vite plugin is enabled.
-   The original compiled stylesheet is loaded unchanged in main.js, so the
-   Tailwind preflight reset MUST NOT be imported here (it would override the
-   original design). Add Tailwind utilities here later if needed. */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
