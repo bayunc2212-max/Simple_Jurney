@@ -14,7 +14,13 @@
           <ContactButton data-v-aac37128 class="desktop" />
         </ul>
         <ContactButton data-v-aac37128 class="mobile-contact" />
-        <button data-v-aac37128 class="hamburger" @click="toggleMenu">
+        <button
+          data-v-aac37128
+          class="hamburger"
+          aria-label="Toggle navigation"
+          :aria-expanded="isOpen"
+          @click="toggleMenu"
+        >
           <span data-v-aac37128 :class="{ open: isOpen }"></span>
           <span data-v-aac37128 :class="{ open: isOpen }"></span>
           <span data-v-aac37128 :class="{ open: isOpen }"></span>
@@ -28,7 +34,12 @@
     leave-active-class="animate__animated animate__fadeOutRight"
   >
     <div data-v-aac37128 v-if="isOpen" class="mobile-menu">
-      <button data-v-aac37128 class="hamburger position-close" @click="toggleMenu">
+      <button
+        data-v-aac37128
+        class="hamburger position-close"
+        aria-label="Close navigation"
+        @click="toggleMenu"
+      >
         <span data-v-aac37128 :class="{ open: isOpen }"></span>
         <span data-v-aac37128 :class="{ open: isOpen }"></span>
         <span data-v-aac37128 :class="{ open: isOpen }"></span>

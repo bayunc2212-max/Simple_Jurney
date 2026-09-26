@@ -5,6 +5,8 @@ import router from './router'
 import { fadeViewport, fadeDownViewport } from './directives'
 import './assets/css/tailwind.css'
 import './assets/css/index-ffUjCuH-.css'
+import './styles/responsive.css'
+import './styles/fixes.css'
 
 const app = createApp(App)
 

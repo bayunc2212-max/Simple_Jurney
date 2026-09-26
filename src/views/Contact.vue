@@ -2,7 +2,7 @@
   <div class="min-h-screen overflow-x-hidden bg-[#01070e] text-white">
     <Navbar />
 
-    <main class="relative isolate overflow-hidden">
+    <main class="tw-scope relative isolate overflow-hidden">
       <div
         aria-hidden="true"
         class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-[#0b1b2a] via-[#01070e] to-[#050c14]"

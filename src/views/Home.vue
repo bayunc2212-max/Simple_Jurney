@@ -590,15 +590,20 @@ export default {
     window.addEventListener('resize', this.onResize)
     this.initHeroWords()
     this.initMainStatement()
+    this.mobPlayAnimation()
+    if (this.mobScrollCtx) ScrollTrigger.refresh()
     this.initServicesAnimation()
-this.$nextTick(() => {
-        try {
-          this.updateDescCards(0)
-        } catch (e) {
-          console.error(e)
-        }
-        this.mobPlayAnimation()
-      })
+    this.$nextTick(() => {
+      try {
+        this.updateDescCards(0)
+      } catch (e) {
+        console.error(e)
+      }
+      this.refreshScrollTriggers()
+    })
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => this.refreshScrollTriggers())
+    }
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.onResize)
@@ -609,7 +614,28 @@ this.$nextTick(() => {
   },
   methods: {
     onResize() {
+      const wasMobile = this.screenWidth <= 640
+      const isMobile = window.innerWidth <= 640
       this.screenWidth = window.innerWidth
+      if (wasMobile === isMobile) return
+      this.resetResponsiveAnimations()
+      this.$nextTick(() => {
+        this.initHeroWords()
+        this.initMainStatement()
+        this.mobPlayAnimation()
+        if (this.mobScrollCtx) ScrollTrigger.refresh()
+        this.initServicesAnimation()
+        this.updateDescCards(0)
+        this.refreshScrollTriggers()
+      })
+    },
+    resetResponsiveAnimations() {
+      this.stmtTrigger?.kill()
+      this.servicesTrigger?.kill()
+      this.mobScrollCtx?.revert()
+      this.stmtTrigger = null
+      this.servicesTrigger = null
+      this.mobScrollCtx = null
     },
     initHeroWords() {
       const section = this.$refs.heroSection
@@ -650,6 +676,7 @@ this.$nextTick(() => {
         })
         .scrollTrigger
     },
+
     initServicesAnimation() {
       const section = this.$refs.servicesSection
       if (!section || !section.offsetParent) return
@@ -665,40 +692,54 @@ this.$nextTick(() => {
           pin: true,
           anticipatePin: 1,
           onUpdate: (e) => {
-            const progress = e.progress
             const count = cards.length
-            const current = Math.min(Math.floor(progress * count), count - 1)
-            cards.forEach((card, idx) => {
-              if (idx === current) {
-                gsap.to(card, {
-                  opacity: 1,
-                  y: 0,
-                  pointerEvents: 'auto',
-                  duration: 0.6,
-                  ease: 'power2.out'
-                })
-              } else if (idx < current) {
-                gsap.to(card, {
-                  opacity: 0,
-                  y: -50,
-                  pointerEvents: 'none',
-                  duration: 0.4,
-                  ease: 'power2.in'
-                })
-              } else {
-                gsap.to(card, {
-                  opacity: 0,
-                  y: -50,
-                  pointerEvents: 'none',
-                  duration: 0.4,
-                  ease: 'power2.inOut'
-                })
-              }
-            })
+            const current = Math.min(Math.floor(e.progress * count), count - 1)
+            this.setServicesCard(cards, current)
+          },
+          onRefresh: (e) => {
+            const count = cards.length
+            const current = Math.min(Math.floor(e.progress * count), count - 1)
+            this.setServicesCard(cards, current)
           }
         }
       })
       this.servicesTrigger = timeline.scrollTrigger
+    },
+
+
+    setServicesCard(cards, current) {
+      cards.forEach((card, idx) => {
+        if (idx === current) {
+          gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            pointerEvents: 'auto',
+            duration: 0.6,
+            ease: 'power2.out'
+          })
+        } else if (idx < current) {
+          gsap.to(card, {
+            opacity: 0,
+            y: -50,
+            pointerEvents: 'none',
+            duration: 0.4,
+            ease: 'power2.in'
+          })
+        } else {
+          gsap.to(card, {
+            opacity: 0,
+            y: -50,
+            pointerEvents: 'none',
+            duration: 0.4,
+            ease: 'power2.inOut'
+          })
+        }
+      })
+    },
+    refreshScrollTriggers() {
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh()
+      })
     },
     mobPlayAnimation() {
       this.mobScrollCtx && this.mobScrollCtx.revert()
