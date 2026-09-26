@@ -1,9 +1,15 @@
 <template>
   <router-view />
+  <ChatWidget />
 </template>
 
 <script>
+import ChatWidget from './components/ChatWidget.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    ChatWidget
+  }
 }
 </script>

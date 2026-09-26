@@ -2,3 +2,11 @@
 .overlay[data-v-604ec286] {
   pointer-events: none;
 }
+
+.chatway--trigger-container {
+  display: none !important;
+}
+
+body.chatway-is-open .chatway--container.has-loaded .chatway--trigger-container {
+  display: block !important;
+}
